@@ -1,5 +1,6 @@
 import requests
 
+#*.token en .gitignore
 token_file = open("JuanCarolBot.token", "r")
 TOKEN = token_file.read()
 URL = "https://api.telegram.org/bot" + TOKEN + "/"
