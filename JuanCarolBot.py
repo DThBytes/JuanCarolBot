@@ -1,4 +1,5 @@
 import requests
+import json
 
 #*.token y /data en .gitignore
 token_file = open("JuanCarolBot.token", "r")
