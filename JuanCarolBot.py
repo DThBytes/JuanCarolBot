@@ -1,9 +1,11 @@
-import requests
+from typing import runtime_checkable
 import json
+import requests
 
-#*.token y /data en .gitignore
+
 token_file = open("JuanCarolBot.token", "r")
 TOKEN = token_file.read()
+token_file.close()
 URL = "https://api.telegram.org/bot" + TOKEN + "/"
 
 def update(offset):
@@ -56,7 +58,14 @@ def enviar_mensaje(idchat, texto):
     #Llamar el metodo sendMessage del bot, passando el texto y la id del chat
     requests.get(URL + "sendMessage?text=" + texto + "&chat_id=" + str(idchat))
  
- 
+def interprete(msg):
+    rta = "chica sed"
+    if msg=="/start":
+        rta = "Hola amorcito"
+    
+    if msg=="hola":
+        rta = "Hola sediento"
+    return rta
  
 #Variable para almacenar la ID del ultimo mensaje procesado
 ultima_id = 0
@@ -71,7 +80,7 @@ while(True):
         #Generar una respuesta dependiendo del tipo de mensaje
         if tipo == "texto":
             texto = leer_mensaje(i)
-            texto_respuesta = "Has escrito: \"" + texto + "\""
+            texto_respuesta = interprete(texto)
         elif tipo == "sticker":
             texto_respuesta = "Bonito sticker!"
         elif tipo == "animacion":
