@@ -7,11 +7,11 @@ token_file = open("JuanCarolBot.token", "r")
 TOKEN = token_file.read()
 token_file.close()
 URL = "https://api.telegram.org/bot" + TOKEN + "/"
+voicePath = "\data\voice"
 
 def update(offset):
     #Llamar al metodo getUpdates del bot, utilizando un offset
     respuesta = requests.get(URL + "getUpdates" + "?offset=" + str(offset) + "&timeout=" + str(100))
- 
  
     #Decodificar la respuesta recibida a formato UTF8
     mensajes_js = respuesta.content.decode("utf8")
@@ -58,14 +58,15 @@ def enviar_mensaje(idchat, texto):
     #Llamar el metodo sendMessage del bot, passando el texto y la id del chat
     requests.get(URL + "sendMessage?text=" + texto + "&chat_id=" + str(idchat))
  
-def interprete(msg):
+def interprete(msg, nom):
     rta = "chica sed"
     if msg=="/start":
-        rta = "Hola amorcito"
+        rta = "Eaaaa"
     
-    if msg=="hola":
-        rta = "Hola sediento"
+    if "hola" or "Hola" in msg:
+        rta = "Hola "+nom+" mi amorcito"
     return rta
+
  
 #Variable para almacenar la ID del ultimo mensaje procesado
 ultima_id = 0
@@ -80,7 +81,7 @@ while(True):
         #Generar una respuesta dependiendo del tipo de mensaje
         if tipo == "texto":
             texto = leer_mensaje(i)
-            texto_respuesta = interprete(texto)
+            texto_respuesta = interprete(texto, nombre)
         elif tipo == "sticker":
             texto_respuesta = "Bonito sticker!"
         elif tipo == "animacion":
